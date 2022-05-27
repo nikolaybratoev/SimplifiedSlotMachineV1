@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SimplifiedSlotMachineV1.Application.Common;
 using SimplifiedSlotMachineV1.Domain.Helpers;
+using SimplifiedSlotMachineV1.Domain.Repositories;
 using SimplifiedSlotMachineV1.Domain.Services.Interfaces;
 using SimplifiedSlotMachineV1.Web.Dtos;
 using SimplifiedSlotMachineV1.Web.Validations;
@@ -9,11 +10,11 @@ namespace SimplifiedSlotMachineV1.Web.Http;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class UsersController : ControllerBase
+public class UsersController : BaseController
 {
     private readonly IUserService _userService;
 
-    public UsersController(IUserService userService)
+    public UsersController(IUserService userService, IUserRepository userRepository) : base(userRepository)
     {
         _userService = userService;
     }
@@ -33,9 +34,16 @@ public class UsersController : ControllerBase
     {
         Console.WriteLine(ApplicationMessages.GETTING_USER);
 
-        var userReadDto = _userService.GetUserById(userIdValidation.UserId);
+        var userId = userIdValidation.UserId;
 
-        return Ok(userReadDto);
+        if (EnsureValidUser(userId))
+        {
+            var userReadDto = _userService.GetUserById(userId);
+
+            return Ok(userReadDto);
+        }
+
+        return BadRequest();
     }
 
     [HttpPost]
@@ -60,9 +68,16 @@ public class UsersController : ControllerBase
     [HttpGet("{userId}/deposit")]
     public ActionResult<double> GetUserDepositByUserId([FromRoute] UserIdValidation userIdValidation)
     {
-        var deposit = _userService.GetUserDepositByUserId(userIdValidation.UserId);
+        var userId = userIdValidation.UserId;
 
-        return Ok(Formatter.Format(deposit));
+        if (EnsureValidUser(userId))
+        {
+            var deposit = _userService.GetUserDepositByUserId(userIdValidation.UserId);
+
+            return Ok(Formatter.Format(deposit));
+        }
+
+        return BadRequest();
     }
 
     [HttpPost("{userId}/deposit/{deposit}")]

@@ -50,4 +50,9 @@ public class UserRepository : IUserRepository
 
         _context.SaveChanges();
     }
+
+    public bool UserExists(int userId)
+    {
+        return _context.Users.Any(u => u.UserId == userId);
+    }
 }
