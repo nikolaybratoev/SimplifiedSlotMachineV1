@@ -17,4 +17,5 @@ public static class ApplicationMessages
     public const string DEPOSIT_ENOUGH = "--> Deposit is enough...";
     public const string DEPOSIT_NOT_ENOUGH = "--> Deposit is not enough...";
     public const string SPINNING_SLOT_MACHINE = "--> Spinning the slot machine...";
+    public const string USER_NOT_FOUND = "--> User not found ...";
 }

@@ -43,7 +43,7 @@ public class UsersController : BaseController
             return Ok(userReadDto);
         }
 
-        return NotFound(userId);
+        return NotFound(ApplicationMessages.USER_NOT_FOUND);
     }
 
     [HttpPost]
@@ -77,7 +77,7 @@ public class UsersController : BaseController
             return Ok(Formatter.Format(deposit));
         }
 
-        return NotFound(userId);
+        return NotFound(ApplicationMessages.USER_NOT_FOUND);
     }
 
     [HttpPost("{userId}/deposit/{deposit}")]
@@ -93,6 +93,6 @@ public class UsersController : BaseController
             return Ok();
         }
 
-        return NotFound(userId);
+        return NotFound(ApplicationMessages.USER_NOT_FOUND);
     }
 }

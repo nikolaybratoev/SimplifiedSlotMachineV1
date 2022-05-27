@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SimplifiedSlotMachineV1.Application.Common;
 using SimplifiedSlotMachineV1.Domain.Repositories;
 using SimplifiedSlotMachineV1.Domain.Services.Interfaces;
 using SimplifiedSlotMachineV1.Web.Dtos;
@@ -29,6 +30,6 @@ public class SpinSlotMachineController : BaseController
             );
         }
 
-        return NotFound(userId);
+        return NotFound(ApplicationMessages.USER_NOT_FOUND);
     }
 }

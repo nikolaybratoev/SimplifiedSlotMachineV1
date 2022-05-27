@@ -37,7 +37,7 @@ public class StakeAmountController : BaseController
             return BadRequest(ApplicationMessages.ENTER_STAKE_AMOUNT);
         }
 
-        return NotFound(userId);
+        return NotFound(ApplicationMessages.USER_NOT_FOUND);
     }
 
     [HttpPost("{userId}/stakeamount/{amount}")]
@@ -49,7 +49,7 @@ public class StakeAmountController : BaseController
         if (EnsureValidUser(userId))
         {
             Console.WriteLine(ApplicationMessages.ENTERING_STAKE_AMOUNT);
-            
+
             var stakeAmountReadDto = _stakeService.EnterUserStakeAmountByUserId(userId, stakeAmount);
 
             if (stakeAmountReadDto != null)
@@ -60,6 +60,6 @@ public class StakeAmountController : BaseController
             return BadRequest(ApplicationMessages.DEPOSIT_NOT_ENOUGH);
         }
 
-        return NotFound(userId);
+        return NotFound(ApplicationMessages.USER_NOT_FOUND);
     }
 }
