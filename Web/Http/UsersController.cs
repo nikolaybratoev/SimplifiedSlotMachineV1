@@ -32,18 +32,18 @@ public class UsersController : BaseController
     [HttpGet("{userId}", Name = "GetUserById")]
     public ActionResult<UserReadDto> GetUserById([FromRoute] UserIdValidation userIdValidation)
     {
-        Console.WriteLine(ApplicationMessages.GETTING_USER);
-
         var userId = userIdValidation.UserId;
 
         if (EnsureValidUser(userId))
         {
+            Console.WriteLine(ApplicationMessages.GETTING_USER);
+
             var userReadDto = _userService.GetUserById(userId);
 
             return Ok(userReadDto);
         }
 
-        return BadRequest();
+        return NotFound(userId);
     }
 
     [HttpPost]
@@ -77,14 +77,22 @@ public class UsersController : BaseController
             return Ok(Formatter.Format(deposit));
         }
 
-        return BadRequest();
+        return NotFound(userId);
     }
 
     [HttpPost("{userId}/deposit/{deposit}")]
-    public ActionResult UpdateUserDeposit(int userId, double deposit)
+    public ActionResult UpdateUserDeposit([FromRoute] DepositValidation depositValidation)
     {
-        _userService.UpdateUserDeposit(userId, deposit);
+        var userId = depositValidation.UserId;
+        var deposit = depositValidation.Deposit;
 
-        return NoContent();
+        if (EnsureValidUser(userId))
+        {
+            _userService.UpdateUserDeposit(userId, deposit);
+
+            return Ok();
+        }
+
+        return NotFound(userId);
     }
 }
