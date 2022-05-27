@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SimplifiedSlotMachineV1.Application.Common;
 using SimplifiedSlotMachineV1.Domain.Helpers;
+using SimplifiedSlotMachineV1.Domain.Repositories;
 using SimplifiedSlotMachineV1.Domain.Services.Interfaces;
 using SimplifiedSlotMachineV1.Web.Dtos;
 using SimplifiedSlotMachineV1.Web.Validations;
@@ -9,11 +10,11 @@ namespace SimplifiedSlotMachineV1.Web.Http;
 
 [Route("api/v1/[controller]")]
 [ApiController]
-public class UsersController : ControllerBase
+public class UsersController : BaseController
 {
     private readonly IUserService _userService;
 
-    public UsersController(IUserService userService)
+    public UsersController(IUserService userService, IUserRepository userRepository) : base(userRepository)
     {
         _userService = userService;
     }
@@ -31,11 +32,18 @@ public class UsersController : ControllerBase
     [HttpGet("{userId}", Name = "GetUserById")]
     public ActionResult<UserReadDto> GetUserById([FromRoute] UserIdValidation userIdValidation)
     {
-        Console.WriteLine(ApplicationMessages.GETTING_USER);
+        var userId = userIdValidation.UserId;
 
-        var userReadDto = _userService.GetUserById(userIdValidation.UserId);
+        if (EnsureValidUser(userId))
+        {
+            Console.WriteLine(ApplicationMessages.GETTING_USER);
 
-        return Ok(userReadDto);
+            var userReadDto = _userService.GetUserById(userId);
+
+            return Ok(userReadDto);
+        }
+
+        return NotFound(ApplicationMessages.USER_NOT_FOUND);
     }
 
     [HttpPost]
@@ -60,16 +68,31 @@ public class UsersController : ControllerBase
     [HttpGet("{userId}/deposit")]
     public ActionResult<double> GetUserDepositByUserId([FromRoute] UserIdValidation userIdValidation)
     {
-        var deposit = _userService.GetUserDepositByUserId(userIdValidation.UserId);
+        var userId = userIdValidation.UserId;
 
-        return Ok(Formatter.Format(deposit));
+        if (EnsureValidUser(userId))
+        {
+            var deposit = _userService.GetUserDepositByUserId(userIdValidation.UserId);
+
+            return Ok(Formatter.Format(deposit));
+        }
+
+        return NotFound(ApplicationMessages.USER_NOT_FOUND);
     }
 
     [HttpPost("{userId}/deposit/{deposit}")]
-    public ActionResult UpdateUserDeposit(int userId, double deposit)
+    public ActionResult UpdateUserDeposit([FromRoute] DepositValidation depositValidation)
     {
-        _userService.UpdateUserDeposit(userId, deposit);
+        var userId = depositValidation.UserId;
+        var deposit = depositValidation.Deposit;
 
-        return NoContent();
+        if (EnsureValidUser(userId))
+        {
+            _userService.UpdateUserDeposit(userId, deposit);
+
+            return Ok();
+        }
+
+        return NotFound(ApplicationMessages.USER_NOT_FOUND);
     }
 }

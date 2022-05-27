@@ -4,15 +4,17 @@ namespace SimplifiedSlotMachineV1.Domain.Repositories;
 
 public interface IUserRepository
 {
-    bool SaveChanges();
+    public bool SaveChanges();
 
-    IEnumerable<User> GetAllUsers();
+    public IEnumerable<User> GetAllUsers();
 
-    User GetUserById(int userId);
+    public User GetUserById(int userId);
 
-    void CreateUser(User user);
+    public void CreateUser(User user);
 
-    double GetUserDepositByUserId(int userId);
+    public double GetUserDepositByUserId(int userId);
 
-    void UpdateUserDepositByUserId(int userId, double deposit);
+    public void UpdateUserDepositByUserId(int userId, double deposit);
+
+    public bool UserExists(int userId);
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SimplifiedSlotMachineV1.Application.Common;
+using SimplifiedSlotMachineV1.Domain.Repositories;
 using SimplifiedSlotMachineV1.Domain.Services.Interfaces;
 using SimplifiedSlotMachineV1.Web.Dtos;
 using SimplifiedSlotMachineV1.Web.Validations;
@@ -8,11 +9,11 @@ namespace SimplifiedSlotMachineV1.Web.Http;
 
 [Route("api/v1/slotmachine")]
 [ApiController]
-public class StakeAmountController : ControllerBase
+public class StakeAmountController : BaseController
 {
     private readonly IStakeAmountService _stakeService;
 
-    public StakeAmountController(IStakeAmountService stakeService)
+    public StakeAmountController(IStakeAmountService stakeService, IUserRepository userRepository) : base(userRepository)
     {
         _stakeService = stakeService;
     }
@@ -20,33 +21,45 @@ public class StakeAmountController : ControllerBase
     [HttpGet("{userId}")]
     public ActionResult<StakeAmountReadDto> GetUserStakeAmount([FromRoute] UserIdValidation userIdValidation)
     {
-        Console.WriteLine(ApplicationMessages.GETTING_STAKE_AMOUNT);
+        var userId = userIdValidation.UserId;
 
-        var stakeAmountReadDto = _stakeService.GetUserStakeAmountByUserId(userIdValidation.UserId);
-
-        if (stakeAmountReadDto.StakeAmount != 0)
+        if (EnsureValidUser(userId))
         {
-            return Ok(stakeAmountReadDto);
+            Console.WriteLine(ApplicationMessages.GETTING_STAKE_AMOUNT);
+
+            var stakeAmountReadDto = _stakeService.GetUserStakeAmountByUserId(userId);
+
+            if (stakeAmountReadDto.StakeAmount != 0)
+            {
+                return Ok(stakeAmountReadDto);
+            }
+
+            return BadRequest(ApplicationMessages.ENTER_STAKE_AMOUNT);
         }
 
-        return BadRequest(ApplicationMessages.ENTER_STAKE_AMOUNT);
+        return NotFound(ApplicationMessages.USER_NOT_FOUND);
     }
 
     [HttpPost("{userId}/stakeamount/{amount}")]
     public ActionResult<StakeAmountReadDto> EnterUserStakeAmountByUserId([FromRoute] StakeAmountValidation stakeAmountValidation)
     {
-        Console.WriteLine(ApplicationMessages.ENTERING_STAKE_AMOUNT);
-
         var userId = stakeAmountValidation.UserId;
         var stakeAmount = stakeAmountValidation.Amount;
 
-        var stakeAmountReadDto = _stakeService.EnterUserStakeAmountByUserId(userId, stakeAmount);
-
-        if (stakeAmountReadDto != null)
+        if (EnsureValidUser(userId))
         {
-            return Ok(stakeAmountReadDto);
+            Console.WriteLine(ApplicationMessages.ENTERING_STAKE_AMOUNT);
+
+            var stakeAmountReadDto = _stakeService.EnterUserStakeAmountByUserId(userId, stakeAmount);
+
+            if (stakeAmountReadDto != null)
+            {
+                return Ok(stakeAmountReadDto);
+            }
+
+            return BadRequest(ApplicationMessages.DEPOSIT_NOT_ENOUGH);
         }
 
-        return BadRequest(ApplicationMessages.DEPOSIT_NOT_ENOUGH);
+        return NotFound(ApplicationMessages.USER_NOT_FOUND);
     }
 }
