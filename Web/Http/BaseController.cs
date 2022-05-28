@@ -16,4 +16,9 @@ public class BaseController : ControllerBase
     {
         return _userRepository.UserExists(userId);
     }
+
+    protected bool EnsureValidUser2(int userId)
+    {
+        return _userRepository.UserExists(userId);
+    }
 }
