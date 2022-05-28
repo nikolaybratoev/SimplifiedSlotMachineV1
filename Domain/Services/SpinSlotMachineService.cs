@@ -16,6 +16,7 @@ public class SpinSlotMachineService : ISpinSlotMachineService
         _userRepository = userRepository;
     }
 
+// TODO
     public SlotMachineResultReadDto Roll(int userId)
     {
         var user = _userRepository.GetUserById(userId);
@@ -24,6 +25,7 @@ public class SpinSlotMachineService : ISpinSlotMachineService
 
         if (stake > 0)
         {
+            // app messages
             Console.WriteLine("--> Spinning the slot machine...");
             var generatedResult = GenerateRandomRows();
 
