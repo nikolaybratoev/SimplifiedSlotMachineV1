@@ -24,7 +24,7 @@ public class StakeAmountService : IStakeAmountService
         return _mapper.Map<StakeAmountReadDto>(userModel);
     }
 
-    public StakeAmountReadDto EnterUserStakeAmountByUserId(int userId, double stakeAmount)
+    public StakeAmountReadDto EnterUserStakeAmountByUserId(int userId, decimal stakeAmount)
     {
         Console.WriteLine(ApplicationMessages.GET_DEPOSIT);
         var userModel = _userRepository.GetUserById(userId);

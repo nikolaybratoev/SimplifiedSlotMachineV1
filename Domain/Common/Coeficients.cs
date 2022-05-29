@@ -2,8 +2,8 @@ namespace SimplifiedSlotMachineV1.Domain.Common;
 
 public static class Coeficients
 {
-    public const double APPLE_COEFICIENT = 0.4;
-    public const double BANANA_COEFICIENT = 0.6;
-    public const double PINEAPPLE_COEFICIENT = 0.8;
-    public const double WILDCARD_COEFICIENT = 0;
+    public const decimal APPLE_COEFICIENT = 0.4M;
+    public const decimal BANANA_COEFICIENT = 0.6M;
+    public const decimal PINEAPPLE_COEFICIENT = 0.8M;
+    public const decimal WILDCARD_COEFICIENT = 0;
 }

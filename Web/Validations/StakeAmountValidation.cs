@@ -10,5 +10,5 @@ public class StakeAmountValidation
 
     [Required]
     [Range(1, double.MaxValue, ErrorMessage = "Invalid format")]
-    public double Amount { get; set; }
+    public decimal Amount { get; set; }
 }

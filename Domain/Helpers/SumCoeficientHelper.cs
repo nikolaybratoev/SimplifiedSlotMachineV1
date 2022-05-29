@@ -5,7 +5,7 @@ namespace SimplifiedSlotMachineV1.Domain.Helpers;
 
 public static class SumCoeficientHelper
 {
-    public static double SumCoeficient(string element, int numberElements)
+    public static decimal SumCoeficient(string element, int numberElements)
     {
         switch(element)
         {

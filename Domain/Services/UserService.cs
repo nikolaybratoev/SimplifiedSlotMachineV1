@@ -32,7 +32,7 @@ public class UserService : IUserService
         return _mapper.Map<UserReadDto>(user);
     }
 
-    public double GetUserDepositByUserId(int id)
+    public decimal GetUserDepositByUserId(int id)
     {
         var deposit = _userRepository.GetUserDepositByUserId(id);
 
@@ -41,7 +41,7 @@ public class UserService : IUserService
         return deposit;
     }
 
-    public void UpdateUserDeposit(int id, double deposit)
+    public void UpdateUserDeposit(int id, decimal deposit)
     {
         Console.WriteLine(ApplicationMessages.UPDATING_DEPOSIT);
 

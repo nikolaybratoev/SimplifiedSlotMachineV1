@@ -6,5 +6,5 @@ public interface IStakeAmountService
 {
     public StakeAmountReadDto GetUserStakeAmountByUserId(int userId);
 
-    public StakeAmountReadDto EnterUserStakeAmountByUserId(int userId, double stakeAmount);
+    public StakeAmountReadDto EnterUserStakeAmountByUserId(int userId, decimal stakeAmount);
 }
