@@ -19,10 +19,10 @@ public class SpinSlotMachineService : ISpinSlotMachineService
     public SlotMachineResultReadDto Spin(int userId)
     {
         var user = _userRepository.GetUserById(userId);
-        var stake = user.StakeAmount;
+        var stakeAmount = user.StakeAmount;
         var deposit = user.Deposit;
 
-        if (stake > 0)
+        if (stakeAmount > 0)
         {
             Console.WriteLine(ApplicationMessages.SPINNING_SLOT_MACHINE);
             var generatedResult = GenerateRandomRows();
@@ -30,7 +30,7 @@ public class SpinSlotMachineService : ISpinSlotMachineService
             var resultDto = GenerateSpinResultReadDto(userId, generatedResult);
 
             var win = CheckResult(generatedResult);
-            var result = win * stake;
+            var result = win * (decimal)stakeAmount;
 
             resultDto.Won = Formatter.Format(result);
             deposit += result;
@@ -89,9 +89,9 @@ public class SpinSlotMachineService : ISpinSlotMachineService
         return array;
     }
 
-    private double CheckResult(string[,] generatedResult)
+    private decimal CheckResult(string[,] generatedResult)
     {
-        double win = 0;
+        decimal win = 0M;
         for (int row = 0; row < generatedResult.GetLength(0); row++)
         {
             var firstElement = generatedResult[row, 0];
@@ -100,7 +100,7 @@ public class SpinSlotMachineService : ISpinSlotMachineService
 
             var combinedResult = firstElement + secondElement + thirdElement;
 
-            win += WinCalculationHelper.CalculateWin(combinedResult);
+            win = win + WinCalculationHelper.CalculateWin(combinedResult);
         }
 
         return win;

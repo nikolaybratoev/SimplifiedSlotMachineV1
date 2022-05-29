@@ -47,7 +47,7 @@ public class UsersController : BaseController
     }
 
     [HttpGet("{userId}/deposit")]
-    public ActionResult<double> GetUserDepositByUserId([FromRoute] UserIdValidation userIdValidation)
+    public ActionResult<decimal> GetUserDepositByUserId([FromRoute] UserIdValidation userIdValidation)
     {
         var userId = userIdValidation.UserId;
 

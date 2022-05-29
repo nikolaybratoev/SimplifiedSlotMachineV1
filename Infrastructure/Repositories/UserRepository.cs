@@ -23,7 +23,7 @@ public class UserRepository : IUserRepository
         return _context.Users.FirstOrDefault(u => u.UserId == userId);
     }
 
-    public double GetUserDepositByUserId(int userId)
+    public decimal GetUserDepositByUserId(int userId)
     {
         return this.GetUserById(userId).Deposit;
     }
@@ -33,7 +33,7 @@ public class UserRepository : IUserRepository
         return (_context.SaveChanges() >= 0);
     }
 
-    public void UpdateUserDepositByUserId(int userId, double deposit)
+    public void UpdateUserDepositByUserId(int userId, decimal deposit)
     {
         var user = _context.Users.First(u => u.UserId == userId);
         user.Deposit += deposit;

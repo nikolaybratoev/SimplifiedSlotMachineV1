@@ -10,5 +10,5 @@ public class DepositValidation
 
     [Required]
     [Range(1, double.MaxValue, ErrorMessage = "Invalid format")]
-    public double Deposit { get; set; }
+    public decimal Deposit { get; set; }
 }

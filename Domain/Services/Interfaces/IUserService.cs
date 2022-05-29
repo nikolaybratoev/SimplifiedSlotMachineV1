@@ -8,7 +8,7 @@ public interface IUserService
 
     public UserReadDto GetUserById(int userId);
 
-    public double GetUserDepositByUserId(int userId);
+    public decimal GetUserDepositByUserId(int userId);
 
-    public void UpdateUserDeposit(int userId, double deposit);
+    public void UpdateUserDeposit(int userId, decimal deposit);
 }

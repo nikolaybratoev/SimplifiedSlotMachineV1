@@ -12,7 +12,7 @@ public class User
     public string Name { get; set; }
 
     [Required]
-    public double Deposit { get; set; }
+    public decimal Deposit { get; set; }
 
-    public double StakeAmount { get; set; }
+    public decimal StakeAmount { get; set; }
 }

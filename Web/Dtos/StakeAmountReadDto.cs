@@ -4,5 +4,5 @@ public class StakeAmountReadDto
 {
     public int UserId { get; set; }
     
-    public double StakeAmount { get; set; }
+    public decimal StakeAmount { get; set; }
 }

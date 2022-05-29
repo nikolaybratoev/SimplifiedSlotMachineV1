@@ -4,7 +4,7 @@ namespace SimplifiedSlotMachineV1.Domain.Helpers;
 
 public static class WinCalculationHelper
 {
-    public static double CalculateWin(string combinedResult)
+    public static decimal CalculateWin(string combinedResult)
     {
         switch(combinedResult) 
         {

@@ -10,9 +10,9 @@ public interface IUserRepository
 
     public User GetUserById(int userId);
 
-    public double GetUserDepositByUserId(int userId);
+    public decimal GetUserDepositByUserId(int userId);
 
-    public void UpdateUserDepositByUserId(int userId, double deposit);
+    public void UpdateUserDepositByUserId(int userId, decimal deposit);
 
     public bool UserExists(int userId);
 }
