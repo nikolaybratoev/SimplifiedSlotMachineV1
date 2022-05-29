@@ -29,7 +29,7 @@ public class UsersController : BaseController
         return Ok(userReadDtos);
     }
 
-    [HttpGet("{userId}", Name = "GetUserById")]
+    [HttpGet("{userId}")]
     public ActionResult<UserReadDto> GetUserById([FromRoute] UserIdValidation userIdValidation)
     {
         var userId = userIdValidation.UserId;
@@ -44,25 +44,6 @@ public class UsersController : BaseController
         }
 
         return NotFound(ApplicationMessages.USER_NOT_FOUND);
-    }
-
-    [HttpPost]
-    public ActionResult<UserReadDto> CreateUser(UserCreateDto userCreateDto)
-    {
-        try
-        {
-            var userReadDto = _userService.CreateUser(userCreateDto);
-
-            return CreatedAtRoute(
-                nameof(GetUserById),
-                new { Id = userReadDto.UserId },
-                userReadDto
-            );
-        }
-        catch (Exception exception)
-        {
-            return BadRequest(exception.Message);
-        }
     }
 
     [HttpGet("{userId}/deposit")]

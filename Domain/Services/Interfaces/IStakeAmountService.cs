@@ -4,7 +4,7 @@ namespace SimplifiedSlotMachineV1.Domain.Services.Interfaces;
 
 public interface IStakeAmountService
 {
-    public StakeAmountReadDto GetUserStakeAmountByUserId(int id);
+    public StakeAmountReadDto GetUserStakeAmountByUserId(int userId);
 
-    public StakeAmountReadDto EnterUserStakeAmountByUserId(int id, double stake);
+    public StakeAmountReadDto EnterUserStakeAmountByUserId(int userId, double stakeAmount);
 }

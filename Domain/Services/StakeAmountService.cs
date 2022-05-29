@@ -17,17 +17,17 @@ public class StakeAmountService : IStakeAmountService
         _mapper = mapper;
     }
 
-    public StakeAmountReadDto GetUserStakeAmountByUserId(int id)
+    public StakeAmountReadDto GetUserStakeAmountByUserId(int userId)
     {
-        var userModel = _userRepository.GetUserById(id);
+        var userModel = _userRepository.GetUserById(userId);
 
         return _mapper.Map<StakeAmountReadDto>(userModel);
     }
 
-    public StakeAmountReadDto EnterUserStakeAmountByUserId(int id, double stakeAmount)
+    public StakeAmountReadDto EnterUserStakeAmountByUserId(int userId, double stakeAmount)
     {
         Console.WriteLine(ApplicationMessages.GET_DEPOSIT);
-        var userModel = _userRepository.GetUserById(id);
+        var userModel = _userRepository.GetUserById(userId);
 
         if (userModel.Deposit > 0)
         {

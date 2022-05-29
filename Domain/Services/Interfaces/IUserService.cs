@@ -6,11 +6,9 @@ public interface IUserService
 {
     public IEnumerable<UserReadDto> GetAllUsers();
 
-    public UserReadDto GetUserById(int id);
+    public UserReadDto GetUserById(int userId);
 
-    public UserReadDto CreateUser(UserCreateDto userCreateDto);
+    public double GetUserDepositByUserId(int userId);
 
-    public double GetUserDepositByUserId(int id);
-
-    public void UpdateUserDeposit(int id, double deposit);
+    public void UpdateUserDeposit(int userId, double deposit);
 }

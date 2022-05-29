@@ -32,26 +32,6 @@ public class UserService : IUserService
         return _mapper.Map<UserReadDto>(user);
     }
 
-    public UserReadDto CreateUser(UserCreateDto userCreateDto)
-    {
-        Console.WriteLine(ApplicationMessages.CREATING_USER);
-        var userModel = _mapper.Map<User>(userCreateDto);
-
-        try
-        {
-            _userRepository.CreateUser(userModel);
-            _userRepository.SaveChanges();
-
-            Console.WriteLine(ApplicationMessages.CREATED_USER);
-            return _mapper.Map<UserReadDto>(userModel);
-        }
-        catch (Exception exception)
-        {
-            Console.WriteLine(ApplicationMessages.CANNOT_CREATE_USER);
-            throw exception;
-        }
-    }
-
     public double GetUserDepositByUserId(int id)
     {
         var deposit = _userRepository.GetUserDepositByUserId(id);

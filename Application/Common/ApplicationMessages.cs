@@ -7,9 +7,6 @@ public static class ApplicationMessages
     public const string GETTING_STAKE_AMOUNT = "--> Getting current stake amount...";
     public const string GETTING_ALL_USERS = "--> Getting all users...";
     public const string GETTING_USER = "--> Getting user...";
-    public const string CREATING_USER = "--> Creating user...";
-    public const string CREATED_USER = "--> User created successfully!";
-    public const string CANNOT_CREATE_USER = "--> Cannot create user!";
     public const string SEEDING_DATA = "--> Seeding data...";
     public const string ALREADY_SEEDED = "--> We already have data...";
     public const string ENTER_STAKE_AMOUNT = "--> Enter stake amount!";

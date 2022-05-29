@@ -4,5 +4,5 @@ namespace SimplifiedSlotMachineV1.Domain.Services.Interfaces;
 
 public interface ISpinSlotMachineService
 {
-    public SlotMachineResultReadDto Roll(int id);
+    public SlotMachineResultReadDto Spin(int userId);
 }

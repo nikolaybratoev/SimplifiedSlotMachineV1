@@ -10,8 +10,6 @@ public interface IUserRepository
 
     public User GetUserById(int userId);
 
-    public void CreateUser(User user);
-
     public double GetUserDepositByUserId(int userId);
 
     public void UpdateUserDepositByUserId(int userId, double deposit);
