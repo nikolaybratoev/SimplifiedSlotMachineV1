@@ -7,7 +7,7 @@ using SimplifiedSlotMachineV1.Web.Validations;
 
 namespace SimplifiedSlotMachineV1.Web.Http;
 
-[Route("api/v1/slotmachine")]
+[Route("api/v1/stake")]
 [ApiController]
 public class StakeAmountController : BaseController
 {
@@ -40,7 +40,7 @@ public class StakeAmountController : BaseController
         return NotFound(ApplicationMessages.USER_NOT_FOUND);
     }
 
-    [HttpPost("{userId}/stakeamount/{amount}")]
+    [HttpPost("{userId}/amount/{amount}")]
     public ActionResult<StakeAmountReadDto> EnterUserStakeAmountByUserId([FromRoute] StakeAmountValidation stakeAmountValidation)
     {
         var userId = stakeAmountValidation.UserId;
