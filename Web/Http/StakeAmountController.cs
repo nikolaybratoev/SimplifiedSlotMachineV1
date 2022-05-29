@@ -11,11 +11,11 @@ namespace SimplifiedSlotMachineV1.Web.Http;
 [ApiController]
 public class StakeAmountController : BaseController
 {
-    private readonly IStakeAmountService _stakeService;
+    private readonly IStakeAmountService _stakeAmountService;
 
-    public StakeAmountController(IStakeAmountService stakeService, IUserRepository userRepository) : base(userRepository)
+    public StakeAmountController(IStakeAmountService stakeAmountService, IUserRepository userRepository) : base(userRepository)
     {
-        _stakeService = stakeService;
+        _stakeAmountService = stakeAmountService;
     }
 
     [HttpGet("{userId}")]
@@ -27,7 +27,7 @@ public class StakeAmountController : BaseController
         {
             Console.WriteLine(ApplicationMessages.GETTING_STAKE_AMOUNT);
 
-            var stakeAmountReadDto = _stakeService.GetUserStakeAmountByUserId(userId);
+            var stakeAmountReadDto = _stakeAmountService.GetUserStakeAmountByUserId(userId);
 
             if (stakeAmountReadDto.StakeAmount != 0)
             {
@@ -50,7 +50,7 @@ public class StakeAmountController : BaseController
         {
             Console.WriteLine(ApplicationMessages.ENTERING_STAKE_AMOUNT);
 
-            var stakeAmountReadDto = _stakeService.EnterUserStakeAmountByUserId(userId, stakeAmount);
+            var stakeAmountReadDto = _stakeAmountService.EnterUserStakeAmountByUserId(userId, stakeAmount);
 
             if (stakeAmountReadDto != null)
             {

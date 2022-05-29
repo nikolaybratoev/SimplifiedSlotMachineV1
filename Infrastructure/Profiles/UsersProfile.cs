@@ -9,7 +9,6 @@ public class UsersProfile : Profile
     public UsersProfile()
     {
         CreateMap<User, UserReadDto>();
-        CreateMap<UserCreateDto, User>();
         CreateMap<User, StakeAmountReadDto>();
     }
 }

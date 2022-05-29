@@ -11,11 +11,11 @@ namespace SimplifiedSlotMachineV1.Web.Http;
 [ApiController]
 public class SpinSlotMachineController : BaseController
 {
-    private readonly ISpinSlotMachineService _rollService;
+    private readonly ISpinSlotMachineService _spinSlotMachineService;
 
-    public SpinSlotMachineController(ISpinSlotMachineService rollService, IUserRepository userRepository) : base(userRepository)
+    public SpinSlotMachineController(ISpinSlotMachineService spinSlotMachineService, IUserRepository userRepository) : base(userRepository)
     {
-        _rollService = rollService;
+        _spinSlotMachineService = spinSlotMachineService;
     }
 
     [HttpGet("{userId}")]
@@ -25,9 +25,14 @@ public class SpinSlotMachineController : BaseController
 
         if (EnsureValidUser(userId))
         {
-            return Ok(
-            _rollService.Roll(userIdValidation.UserId)
-            );
+            var result = _spinSlotMachineService.Spin(userIdValidation.UserId);
+
+            if (result != null)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(ApplicationMessages.ENTER_STAKE_AMOUNT);
         }
 
         return NotFound(ApplicationMessages.USER_NOT_FOUND);

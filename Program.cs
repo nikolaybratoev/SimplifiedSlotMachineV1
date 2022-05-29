@@ -8,7 +8,7 @@ using SimplifiedSlotMachineV1.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Adds database context
+// Adds database contexts
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseInMemoryDatabase("InMemory")
 );

@@ -2,7 +2,7 @@ using SimplifiedSlotMachineV1.Domain.Common;
 
 namespace SimplifiedSlotMachineV1.Domain.Helpers;
 
-public static class WinHelper
+public static class WinCalculationHelper
 {
     public static double CalculateWin(string combinedResult)
     {

@@ -16,8 +16,7 @@ public class SpinSlotMachineService : ISpinSlotMachineService
         _userRepository = userRepository;
     }
 
-// TODO
-    public SlotMachineResultReadDto Roll(int userId)
+    public SlotMachineResultReadDto Spin(int userId)
     {
         var user = _userRepository.GetUserById(userId);
         var stake = user.StakeAmount;
@@ -25,13 +24,12 @@ public class SpinSlotMachineService : ISpinSlotMachineService
 
         if (stake > 0)
         {
-            // app messages
-            Console.WriteLine("--> Spinning the slot machine...");
+            Console.WriteLine(ApplicationMessages.SPINNING_SLOT_MACHINE);
             var generatedResult = GenerateRandomRows();
 
-            var resultDto = GenerateSpinReadDto(userId, generatedResult);
+            var resultDto = GenerateSpinResultReadDto(userId, generatedResult);
 
-            var win = CheckIfWin(generatedResult);
+            var win = CheckResult(generatedResult);
             var result = win * stake;
 
             resultDto.Won = Formatter.Format(result);
@@ -91,32 +89,32 @@ public class SpinSlotMachineService : ISpinSlotMachineService
         return array;
     }
 
-    private double CheckIfWin(string[,] generatedResult)
+    private double CheckResult(string[,] generatedResult)
     {
-        double win = 0.0;
+        double win = 0;
         for (int row = 0; row < generatedResult.GetLength(0); row++)
         {
             var firstElement = generatedResult[row, 0];
             var secondElement = generatedResult[row, 1];
             var thirdElement = generatedResult[row, 2];
 
-            var combinedResult = firstElement.ToString() + secondElement.ToString() + thirdElement.ToString();
+            var combinedResult = firstElement + secondElement + thirdElement;
 
-            win += WinHelper.CalculateWin(combinedResult);
+            win += WinCalculationHelper.CalculateWin(combinedResult);
         }
 
         return win;
     }
 
-    private SlotMachineResultReadDto GenerateSpinReadDto(int userId, string [,] generatedResult)
+    private SlotMachineResultReadDto GenerateSpinResultReadDto(int userId, string [,] generatedResult)
     {
         return new SlotMachineResultReadDto
             {
                 UserId = userId,
-                FirstRow = generatedResult[0, 0].ToString() + generatedResult[0, 1].ToString() + generatedResult[0, 2].ToString(),
-                SecondRow = generatedResult[1, 0].ToString() + generatedResult[1, 1].ToString() + generatedResult[1, 2].ToString(),
-                ThirdRow = generatedResult[2, 0].ToString() + generatedResult[2, 1].ToString() + generatedResult[2, 2].ToString(),
-                FourthRow = generatedResult[3, 0].ToString() + generatedResult[3, 1].ToString() + generatedResult[3, 2].ToString(),
+                FirstRow = generatedResult[0, 0] + generatedResult[0, 1] + generatedResult[0, 2],
+                SecondRow = generatedResult[1, 0] + generatedResult[1, 1] + generatedResult[1, 2],
+                ThirdRow = generatedResult[2, 0] + generatedResult[2, 1] + generatedResult[2, 2],
+                FourthRow = generatedResult[3, 0] + generatedResult[3, 1] + generatedResult[3, 2],
             };
     }
 }
