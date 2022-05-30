@@ -3,7 +3,7 @@ using SimplifiedSlotMachineV1.Domain.Repositories;
 
 namespace SimplifiedSlotMachineV1.Web.Http;
 
-public class BaseController : ControllerBase
+public abstract class BaseController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
 
